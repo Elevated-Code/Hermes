@@ -14,11 +14,21 @@ class RulesCommand extends Command {
     async messageRun(message, args) {
         const { client } = this.container
         const channel = await args.pick('channel')
+        const mention = await args.pick('boolean')
         const title = await args.pick('string')
         const description = await args.rest('string')
         const embed = MessageEmbed(title, description, client, message);
-        await channel.bulkDelete(100)
-        return channel.send({ embeds: [embed] })
+        if (message.attachments.first()) {
+            embed.setImage(message.attachments.first().url)
+        }
+        if (mention) {
+            return channel.send({ 
+                content: '||@here||',
+                embeds: [embed]
+             });
+        } else {
+            return channel.send({ embeds: [embed] })
+        }
     }
 }
 
