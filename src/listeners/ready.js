@@ -11,7 +11,15 @@ class ReadyListener extends Listener {
     run(client) {
         const { username, id } = client.user;
         this.container.logger.info(`Successfully logged in as ${username} (${id})`);
-        client.user.setActivity('Elevated Code', { type: 'WATCHING' })
+        this.updateActivity(client)
+        setTimeout(() => {
+            this.updateActivity(client)
+        }, 60000);
+    }
+
+    updateActivity(client) {
+        const guild = client.guilds.cache.first()
+        client.user.setActivity(`over ${guild.memberCount} users`, {type: 'WATCHING'});
     }
 }
 
