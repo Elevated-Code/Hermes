@@ -7,6 +7,6 @@ module.exports = embed = (title, description, client, message) => {
     .setColor("#0000ff")
     .setTimestamp(message.createdAt)
     .setThumbnail(
-      client.user.displayAvatarURL({ format: 'webp', size: 128 })
+      message.guild.iconURL()
     );
 };
